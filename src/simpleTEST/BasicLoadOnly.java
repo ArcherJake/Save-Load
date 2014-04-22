@@ -2,13 +2,11 @@ package simpleTEST;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class BasicSaveLoad {
+public class BasicLoadOnly {
 	
 	private static ArrayList<String> startState = new ArrayList<String>();
 	private static ArrayList<String> endState = new ArrayList<String>();
@@ -16,7 +14,7 @@ public class BasicSaveLoad {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-		
+
 		startState.add("One");
 		startState.add("Two");
 		startState.add("Three");
@@ -24,7 +22,7 @@ public class BasicSaveLoad {
 		startState.add("Five");
 		startState.add("Six");
 		
-		SaveState();
+		//SaveState();
 		LoadState();
 		System.out.println("Start Test");
 		for (int i = 0; i < startState.size(); i++){
@@ -32,13 +30,7 @@ public class BasicSaveLoad {
 			System.out.println(startState.get(i) + " vs " + endState.get(i));
 		}
 		
-	}
-	private static void SaveState () throws FileNotFoundException, IOException {
-		
-		ObjectOutputStream scribe = new ObjectOutputStream (new FileOutputStream(path));
-		scribe.writeObject(startState);
-		scribe.close();
-	}
+	}	
 	
 	@SuppressWarnings("unchecked")
 	private static void LoadState () throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -49,4 +41,5 @@ public class BasicSaveLoad {
 		
 		
 	}
+
 }
