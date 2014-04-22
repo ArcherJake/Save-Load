@@ -2,10 +2,8 @@ package saveload;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import models.Attribute;
@@ -23,10 +21,12 @@ public class LoadOnly {
 	private static ArrayList<ClassObject> classObjectList = new ArrayList<ClassObject>();
 	private static ArrayList<Relationship> relationList = new ArrayList<Relationship>();
 	private static ArrayList<ClassObject> classObjectList2 = new ArrayList<ClassObject>();
+	@SuppressWarnings("unused")
 	private static ArrayList<Relationship> relationList2 = new ArrayList<Relationship>();
 	private static Datamodel state;
 
-	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public static void main(String[] args) throws FileNotFoundException,
+			ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub//create two test Classobjects
 		ClassObject target1 = new ClassObject("There", 10, 10, 0);
 		target1.addOperation("1-Oper2", 0);
@@ -36,7 +36,7 @@ public class LoadOnly {
 		target1.addAttribute("1-Atrib2", 0);
 		target1.addAttribute("1-Atrib3", 0);
 		target1.addAttribute("1-LongAtrib", 0);
-		
+
 		ClassObject target2 = new ClassObject("Here", 20, 20, 0);
 		target2.addOperation("2-Oper2", 0);
 		target2.addOperation("2-Oper3", 0);
@@ -45,31 +45,36 @@ public class LoadOnly {
 		target2.addAttribute("2-Atrib2", 0);
 		target2.addAttribute("2-Atrib3", 0);
 		target2.addAttribute("2-LongAtrib", 0);
-		
-		//create a test relationship
-		Relationship line = new Relationship(target1,target2,1);
-		
+
+		// create a test relationship
+		Relationship line = new Relationship(target1, target2, 1);
+
 		relationList.add(line);
-		
+
 		classObjectList.add(target1);
 		classObjectList.add(target2);
-		System.out.println("size of list before save/load is : " + classObjectList.size());
-		
-		//try to pass them in and out of the loader
+		System.out.println("size of list before save/load is : "
+				+ classObjectList.size());
+
+		// try to pass them in and out of the loader
 		System.out.println("First Save Load attempt:");
-		
-		
 
 		LoadState();
 		if (classObjectList.size() == classObjectList2.size()) {
 			System.out.println("Both Classes equal size: "
 					+ classObjectList.size());
+			loadTest();
+
 		} else {
 			System.out
 					.println("Size of loaded ArrayList does not match."
 							+ classObjectList.size() + " vs "
 							+ classObjectList2.size());
 		}
+
+	}
+
+	private static void loadTest() {
 
 		// Information matching tests
 		ClassObject cL1, cL2;
@@ -86,12 +91,21 @@ public class LoadOnly {
 			operationList1 = cL1.getOperations();
 			operationList2 = cL2.getOperations();
 			System.out.println(name1 + " vs " + name2);
-			for (int j = 0; j < attributeList1.size(); j++) {
-				Attribute check1 = attributeList1.get(j);
-				Attribute check2 = attributeList2.get(j);
 
-				System.out.println(check1.getAttributeName() + " vs "
-						+ check2.getAttributeName());
+			for (int j = 0; j < attributeList1.size(); j++) {
+				Attribute Acheck1 = attributeList1.get(j);
+				Attribute Acheck2 = attributeList2.get(j);
+				System.out.println(Acheck1.getAttributeName() + " vs "
+						+ Acheck2.getAttributeName());
+
+			}
+
+			for (int j = 0; j < attributeList1.size(); j++) {
+				Operation Ocheck1 = operationList1.get(j);
+				Operation Ocheck2 = operationList2.get(j);
+				System.out.println(Ocheck1.getOperationName() + " vs "
+						+ Ocheck2.getOperationName());
+
 			}
 		}
 

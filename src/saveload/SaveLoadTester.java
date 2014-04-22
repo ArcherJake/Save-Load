@@ -20,11 +20,15 @@ public class SaveLoadTester {
 	 * @param args
 	 */
 	
+	
+
 	private static ArrayList<ClassObject> classObjectList = new ArrayList<ClassObject>();
 	private static ArrayList<Relationship> relationList = new ArrayList<Relationship>();
 	private static ArrayList<ClassObject> classObjectList2 = new ArrayList<ClassObject>();
+	@SuppressWarnings("unused")
 	private static ArrayList<Relationship> relationList2 = new ArrayList<Relationship>();
 	private static Datamodel state;
+
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		// Program to test the Datamodel class and the Save / Load serializer functions.
 		
@@ -77,6 +81,7 @@ public class SaveLoadTester {
 		LoadState();
 		if (classObjectList.size() == classObjectList2.size()){
 			System.out.println("Both Classes equal size: " + classObjectList.size());
+			loadTest();
 		}
 		else {
 			System.out.println("Size of loaded ArrayList does not match." 
@@ -84,6 +89,10 @@ public class SaveLoadTester {
 					+ " vs " + classObjectList2.size() );
 		}
 		
+	}
+
+	private static void loadTest() {
+
 		//Information matching tests
 		ClassObject cL1, cL2;
 		ArrayList<Attribute> attributeList1, attributeList2;
@@ -99,35 +108,47 @@ public class SaveLoadTester {
 			operationList1 = cL1.getOperations();
 			operationList2 = cL2.getOperations();
 			System.out.println(name1 + " vs " + name2);
+			
 			for (int j = 0; j < attributeList1.size(); j++){
-				Attribute check1 = attributeList1.get(j);
-				Attribute check2 = attributeList2.get(j);
-				 
-				System.out.println(check1.getAttributeName() + " vs " + check2.getAttributeName());
+				Attribute Acheck1 = attributeList1.get(j);
+				Attribute Acheck2 = attributeList2.get(j);
+				System.out.println(Acheck1.getAttributeName() 
+						+ " vs " + Acheck2.getAttributeName());
+				
+			}
+			
+			for (int j = 0; j < attributeList1.size(); j++){
+				Operation Ocheck1 = operationList1.get(j);
+				Operation Ocheck2 = operationList2.get(j);
+				System.out.println(Ocheck1.getOperationName() 
+						+ " vs " + Ocheck2.getOperationName());			
+		
 			}
 		}
-
+		
 	}
-	
-	
-private static void SaveState () throws FileNotFoundException, IOException {
-		
+
+	private static void SaveState() throws FileNotFoundException, IOException {
+
 		state = new Datamodel(classObjectList, relationList);
-		
-		ObjectOutputStream scribe = new ObjectOutputStream (new FileOutputStream("UML.ser"));
+
+		ObjectOutputStream scribe = new ObjectOutputStream(
+				new FileOutputStream("UML.ser"));
 		scribe.writeObject(state);
 		scribe.close();
-		
+
 	}
-	
-	private static void LoadState () throws FileNotFoundException, IOException, ClassNotFoundException {
-		
-		ObjectInputStream scribe = new ObjectInputStream(new FileInputStream("UML.ser"));
+
+	private static void LoadState() throws FileNotFoundException, IOException,
+			ClassNotFoundException {
+
+		ObjectInputStream scribe = new ObjectInputStream(new FileInputStream(
+				"UML.ser"));
 		state = (Datamodel) scribe.readObject();
 		scribe.close();
-		
-		classObjectList2 = Datamodel.getClassList();
-		relationList2 = Datamodel.getRelationList();
-		
+
+		classObjectList2 = state.getClassList();
+		relationList2 = state.getRelationList();
+		state.cleardata();
 	}
 }
