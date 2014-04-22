@@ -23,7 +23,7 @@ public class BasicSaveOnly {
 		
 		SaveState();
 		//LoadState();
-		System.out.println("Start Test");
+		System.out.println("Save run");
 		
 		
 	}
