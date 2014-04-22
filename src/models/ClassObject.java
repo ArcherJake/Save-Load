@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * 
  * @author oRANGE
  */
-public class ClassObject implements Serializable {
+public class ClassObject implements Serializable, Cloneable{
 
 	/**
 	 * 
