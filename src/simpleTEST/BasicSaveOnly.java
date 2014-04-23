@@ -82,13 +82,14 @@ public class BasicSaveOnly {
 		}
 
 		// variables for relationships list
-		Relationship target2;
+		/*Relationship target2;
 		sizeof = relationList.size();
 		scribe.writeInt(sizeof);
 		for (int i = 0; i < sizeof; i++) {
 			target2 = relationList.get(i);
 			scribe.writeObject(target2);
-		}
+		}*/
+		scribe.close();
 	}
 
 }
