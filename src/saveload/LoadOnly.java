@@ -20,14 +20,15 @@ public class LoadOnly {
 
 	private static ArrayList<ClassObject> classObjectList = new ArrayList<ClassObject>();
 	private static ArrayList<Relationship> relationList = new ArrayList<Relationship>();
-	private static ArrayList<ClassObject> classObjectList2 = new ArrayList<ClassObject>();
-	@SuppressWarnings("unused")
-	private static ArrayList<Relationship> relationList2 = new ArrayList<Relationship>();
-	private static Datamodel state;
+	private static ArrayList<ClassObject> classObjectList2 = new ArrayList<ClassObject>();	
+	private static ArrayList<Relationship> relationList2 = new ArrayList<Relationship>();	
+	private static String path = "UML.ser";
 
 	public static void main(String[] args) throws FileNotFoundException,
-			ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub//create two test Classobjects
+			IOException, ClassNotFoundException {
+		// TODO Auto-generated method stub
+
+		// create two test Classobjects
 		ClassObject target1 = new ClassObject("There", 10, 10, 0);
 		target1.addOperation("1-Oper2", 0);
 		target1.addOperation("1-Oper3", 0);
@@ -48,80 +49,72 @@ public class LoadOnly {
 
 		// create a test relationship
 		Relationship line = new Relationship(target1, target2, 1);
+		Relationship line2 = new Relationship(target2, target1, 1);
 
 		relationList.add(line);
-
+		relationList.add(line2);
+		
 		classObjectList.add(target1);
 		classObjectList.add(target2);
-		System.out.println("size of list before save/load is : "
-				+ classObjectList.size());
 
-		// try to pass them in and out of the loader
-		System.out.println("First Save Load attempt:");
-
+		// SaveState();
+		System.out.println("Attempting Load:");
 		LoadState();
-		if (classObjectList.size() == classObjectList2.size()) {
-			System.out.println("Both Classes equal size: "
-					+ classObjectList.size());
-			loadTest();
-
-		} else {
-			System.out
-					.println("Size of loaded ArrayList does not match."
-							+ classObjectList.size() + " vs "
-							+ classObjectList2.size());
-		}
-
-	}
-
-	private static void loadTest() {
-
-		// Information matching tests
-		ClassObject cL1, cL2;
-		ArrayList<Attribute> attributeList1, attributeList2;
-		ArrayList<Operation> operationList1, operationList2;
-		String name1, name2;
+		System.out.println("Start Test");
+		System.out.println("Checking sizes: " + classObjectList.size() + " vs "
+				+ classObjectList2.size());
+		
+		
 		for (int i = 0; i < classObjectList.size(); i++) {
-			cL1 = classObjectList.get(i);
-			cL2 = classObjectList2.get(i);
-			name1 = cL1.getName();
-			name2 = cL2.getName();
-			attributeList1 = cL1.getAttributes();
-			attributeList2 = cL2.getAttributes();
-			operationList1 = cL1.getOperations();
-			operationList2 = cL2.getOperations();
-			System.out.println(name1 + " vs " + name2);
+			
+			ClassObject held = classObjectList.get(i);
+			ClassObject loaded = classObjectList2.get(i);
+			
+			
+			//name check first
 
-			for (int j = 0; j < attributeList1.size(); j++) {
-				Attribute Acheck1 = attributeList1.get(j);
-				Attribute Acheck2 = attributeList2.get(j);
-				System.out.println(Acheck1.getAttributeName() + " vs "
-						+ Acheck2.getAttributeName());
+			System.out.println(held.getName() + " vs "
+					+ loaded.getName());
+			
+			//check ints
+		}
+		
+		
+		for (int i = 0; i < relationList.size(); i++) {
 
-			}
-
-			for (int j = 0; j < attributeList1.size(); j++) {
-				Operation Ocheck1 = operationList1.get(j);
-				Operation Ocheck2 = operationList2.get(j);
-				System.out.println(Ocheck1.getOperationName() + " vs "
-						+ Ocheck2.getOperationName());
-
-			}
+			System.out.println(relationList.get(i).getOrigin().getName() +
+					" to " + relationList.get(i).getDestination().getName()
+					+ " vs "	
+					+ relationList2.get(i).getOrigin().getName() + 
+					" to " + relationList2.get(i).getDestination().getName());
 		}
 
 	}
 
 	private static void LoadState() throws FileNotFoundException, IOException,
 			ClassNotFoundException {
-
 		ObjectInputStream scribe = new ObjectInputStream(new FileInputStream(
-				"UML.ser"));
-		state = (Datamodel) scribe.readObject();
+				path));
+
+		// variables for classObjects list
+		ClassObject target1;
+		Relationship target2;
+
+		int sizeof = scribe.readInt();
+		for (int i = 0; i < sizeof; i++) {
+			target1 = (ClassObject) scribe.readObject();
+
+			classObjectList2.add(target1);
+		}
+
+		sizeof = scribe.readInt();
+		for (int i = 0; i < sizeof; i++) {
+			target2 = (Relationship) scribe.readObject();
+
+			relationList2.add(target2);
+		}
+
 		scribe.close();
-
-		classObjectList2 = state.getClassList();
-		relationList2 = state.getRelationList();
-
 	}
 
 }
