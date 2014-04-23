@@ -28,6 +28,7 @@ public class SaveLoadTester {
 	@SuppressWarnings("unused")
 	private static ArrayList<Relationship> relationList2 = new ArrayList<Relationship>();
 	private static Datamodel state;
+	private static String path = "UML.ser";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		// Program to test the Datamodel class and the Save / Load serializer functions.
@@ -138,6 +139,41 @@ public class SaveLoadTester {
 		scribe.close();
 
 	}
+	
+	/*private static void SaveState() throws FileNotFoundException, IOException {
+		state = new Datamodel(classObjectList, relationList);
+		ObjectOutputStream scribe = new ObjectOutputStream(
+				new FileOutputStream(path));
+		
+		//variables for classObjects list
+		ClassObject target;
+		String classname;
+		int id, xpos, ypos, width, height;
+		ArrayList<Attribute> aList;
+		ArrayList<Operation> oList;
+		
+		int sizeof = classObjectList.size();
+		scribe.writeInt(sizeof);
+		for (int i = 0; i < sizeof; i++){
+			target = classObjectList.get(i);
+			classname = target.getName();
+			id = target.getId();
+			xpos = target.getxPos();
+			ypos = target.getyPos();
+			width = target.getWidth();
+			height = target.getHeight();
+			scribe.writeObject(target);			
+		}
+		
+		//variables for relationships list
+		Relationship target2;
+		sizeof = relationList.size();
+		scribe.writeInt(sizeof);
+		for (int i = 0; i < sizeof; i++){
+			target2 = relationList.get(i);
+			scribe.writeObject(target2);
+		}
+	}*/
 
 	private static void LoadState() throws FileNotFoundException, IOException,
 			ClassNotFoundException {
