@@ -30,18 +30,18 @@ public class LoadOnly {
 
 		// create two test Classobjects
 		ClassObject target1 = new ClassObject("There", 10, 10, 0);
+		target1.addOperation("1-Oper1", 0);
 		target1.addOperation("1-Oper2", 0);
 		target1.addOperation("1-Oper3", 0);
-		target1.addOperation("1-Oper4", 0);
 		target1.addAttribute("1-Atrib1", 0);
 		target1.addAttribute("1-Atrib2", 0);
 		target1.addAttribute("1-Atrib3", 0);
 		target1.addAttribute("1-LongAtrib", 0);
 
 		ClassObject target2 = new ClassObject("Here", 20, 20, 0);
+		target2.addOperation("2-Oper1", 0);
 		target2.addOperation("2-Oper2", 0);
 		target2.addOperation("2-Oper3", 0);
-		target2.addOperation("2-Oper4", 0);
 		target2.addAttribute("2-Atrib1", 0);
 		target2.addAttribute("2-Atrib2", 0);
 		target2.addAttribute("2-Atrib3", 0);
@@ -60,23 +60,53 @@ public class LoadOnly {
 		// SaveState();
 		System.out.println("Attempting Load:");
 		LoadState();
+		
+		LoadTest();
+		
+		
+	}
+
+	private static void LoadTest() {
+		/**
+		 * Checks all the information from a loaded class.
+		 */
+		
 		System.out.println("Start Test");
 		System.out.println("Checking sizes: " + classObjectList.size() + " vs "
 				+ classObjectList2.size());
 		
 		
 		for (int i = 0; i < classObjectList.size(); i++) {
-			
+			int index = i+1;
+			System.out.println("Testing Classobject " + index + " of " + classObjectList.size());
 			ClassObject held = classObjectList.get(i);
 			ClassObject loaded = classObjectList2.get(i);
-			
-			
+			//ArrayList<Attribute> heldA, loadedA;
+			//ArrayList<Operation> heldO, loadedO;
 			//name check first
 
-			System.out.println(held.getName() + " vs "
+			System.out.println("Name Test: " + held.getName() + " vs "
 					+ loaded.getName());
 			
-			//check ints
+			//check Attributes and Operations lists
+			System.out.println("Attributes List Size Test: " + held.getAttributes().size()
+					+ " vs " + loaded.getAttributes().size());
+			//heldA = held.getAttributes();
+			//loadedA = loaded.getAttributes();
+			for (int j = 0; j < held.getAttributes().size(); j++){			
+				
+			}
+			
+			System.out.println("Operations List Size Test: " + held.getOperations().size()
+					+ " vs " + loaded.getOperations().size());
+			
+			for (int j = 0; j < held.getOperations().size(); j++){
+			
+				
+				System.out.println(held.getOperations().get(j).getOperationName() + " vs " + loaded.getOperations().get(j).getOperationName());
+			}
+			
+			System.out.println();
 		}
 		
 		
@@ -89,6 +119,7 @@ public class LoadOnly {
 					" to " + relationList2.get(i).getDestination().getName());
 		}
 
+		
 	}
 
 	private static void LoadState() throws FileNotFoundException, IOException,

@@ -26,18 +26,18 @@ public class SaveOnly {
 
 		// create two test Classobjects
 		ClassObject target1 = new ClassObject("There", 10, 10, 0);
+		target1.addOperation("1-Oper1", 0);
 		target1.addOperation("1-Oper2", 0);
 		target1.addOperation("1-Oper3", 0);
-		target1.addOperation("1-Oper4", 0);
 		target1.addAttribute("1-Atrib1", 0);
 		target1.addAttribute("1-Atrib2", 0);
 		target1.addAttribute("1-Atrib3", 0);
 		target1.addAttribute("1-LongAtrib", 0);
 
 		ClassObject target2 = new ClassObject("Here", 20, 20, 0);
+		target2.addOperation("2-Oper1", 0);
 		target2.addOperation("2-Oper2", 0);
 		target2.addOperation("2-Oper3", 0);
-		target2.addOperation("2-Oper4", 0);
 		target2.addAttribute("2-Atrib1", 0);
 		target2.addAttribute("2-Atrib2", 0);
 		target2.addAttribute("2-Atrib3", 0);
